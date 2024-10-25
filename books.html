@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRIVIA Books</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+           
+            font-family: Arial, sans-serif;
+            color: wheat;
+        }
+
+        body {
+         background-image: url("https://windybot.com/img/LUsT2D-rvVOwsKayy5DH.jpg");
+         background-repeat: no-repeat;
+         background-size: cover;
+         height: 90vh;
+            
+            
+        }
+
+        .navbar {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            
+            
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 500px;
+            margin: 0 2rem;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem;
+            border-radius: 20px;
+            border: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: wheat;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: rgb(249, 220, 183);
+        }
+
+        .subscribe-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .subscribe-btn:hover {
+            background: white;
+            color: rgb(85, 34, 34);
+        }
+
+        .page-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            height: 90vh;
+            
+        }
+
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgb(85, 34, 34);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: rgb(65, 24, 24);
+        }
+
+        .google-btn {
+            background: white;
+            color: rgb(85, 34, 34);
+            border: 2px solid rgb(85, 34, 34);
+            margin-top: 1rem;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .image-grid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-bar {
+                width: 100%;
+                max-width: none;
+                margin: 1rem 0;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            span:hover{
+                text-decoration: solid;
+            }
+            .nav-links span:hover{
+                
+                text-decoration: underline;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>TRIVIA</h1>
+        <div class="search-bar">
+            <input type="text" placeholder="Search books...">
+        </div>
+        <div class="nav-links">
+            <span class="nav-link" onclick="showPage('home')">HOME</span>
+            <span class="nav-link" onclick="showPage('images')">IMAGES</span>
+            <span class="nav-link" onclick="showPage('maps')">MAPS</span>
+            <span class="nav-link" onclick="showPage('contact')">CONTACT</span>
+            <span class="nav-link" onclick="showPage('about')">ABOUT US</span>
+            <span class="nav-link" onclick="showPage('login')">LOGIN</span>
+        </div>
+        <button class="subscribe-btn">
+            SUBSCRIBE
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+        </button>
+    </nav>
+
+    <div id="page-content" class="page-content">
+        
+        <!-- Content will be loaded here -->
+    </div>
+
+    <script>
+        // Mock user database
+        const users = [
+            { email: 'amirthavarshini153@gmail.com', password: 'naini2016' }
+        ];
+
+        // Check if user is logged in
+        let isLoggedIn = false;
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                isLoggedIn = true;
+                alert('Login successful!');
+                showPage('home');
+            } else {
+                alert('Invalid credentials!');
+            }
+        }
+
+        function showPage(page) {
+            const content = document.getElementById('page-content');
+
+            // Check if login is required
+              if (!isLoggedIn && page !== 'login') {
+                  page = 'login';
+            }
+
+            switch(page) {
+                case 'home':
+                    content.innerHTML = `
+                        <div style="display:flex;flex-direction:row;"><h1 style="color:black; position:absolute;top:150px;">A Book Website!</h1>
+                           
+                      
+                            <h2 style="width:700px">A book website is a dynamic platform where readers can explore a vast collection of books across various genres and formats. It typically features detailed book descriptions, reviews, and author information to help readers make informed choices. Many book websites offer recommendations, new releases, and bestseller lists to keep visitors updated on current trends. Some sites also have interactive features like reader reviews, ratings, and discussion forums, fostering a community of book enthusiasts. With easy search and browsing tools, a book website makes it convenient for readers to discover, purchase, or borrow books online, enhancing the reading experience.</h2>
+                    </div>`;
+                    break;
+
+                case 'login':
+                    content.innerHTML = `
+                        
+                       <div  style="display:flex; align-items:center; justify-content:center;flex-direction:column;  border:1px solid rgb(65, 24, 24); width:500px;height:300px; backdrop-filter: blur(5px)">  
+                                                   
+                 <h1 style="margin-left:30px; color:wheat">Welcome to Trivia Website!</h1>
+                <br>
+                <h2 style="color:wheat;">Log In</h2><br>
+                <input  type="text" placeholder="👤Email id" id="email" style="padding: 10px; border:none; border-radius: 19px; background-color:wheat">
+                <br><br>
+                <input type="password" placeholder="🔒Password" id="password" style="padding: 10px; border:none; background-color:wheat; border-radius: 19px;"><br>
+
+                 <button onclick="login()" class="btn" style="width:100px; color:wheat">Login</button>
+                           
+
+                </div>`
+                    break;
+
+                case 'images':
+                    content.innerHTML = `
+                        <h2 style=" backdrop-filter: blur(5px); padding:20px; position:absolute;left:250px">IMAGE GALLERY📚</h2>
+                        <div class="image-grid" style="backdrop-filter: blur(5px);">
+                            <img src="https://img2.wallspic.com/previews/5/8/9/2/3/132985/132985-reading-arm-text-author-page-x750.jpg" alt="Library 1" style="margin-top:30px">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf8TdAY1eclMH5Njv60z3BN1d6_EbY7jXd3eWmedwwiDU1zHc_gR0wIMO1hNoaVTe6AB8&usqp=CAU" alt="Library 2">
+                            
+                        </div>
+                    `;
+                    break;
+
+                case 'maps':
+                    content.innerHTML = `
+                        <h2 style="position:absolute;right:1170px">Find Us on!</h2>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3543.9414153172024!2d77.02058699999999!3d11.0249119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba857ae115e51f7%3A0x4173b44af344c6!2sFrenzo%20Academy!5e1!3m2!1sen!2sin!4v1724158395570!5m2!1sen!2sin" 
+                            width="50%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
+                    `;
+                    break;
+
+                case 'contact':
+                    content.innerHTML = `
+                        <div class="contact-form">
+                            <h2>Contact Us</h2><br>
+                            <div class="form-group">
+                                <input type="text" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Message" style="width: 100%; height: 150px; padding: 0.5rem;"></textarea>
+                            </div>
+                            <button class="btn">Send Message</button>
+                        </div>
+                    `;
+                    break;
+
+                case 'about':
+                    content.innerHTML = `
+                        <div style="display:flex;flex-direction:column;width:800px"><h2>About TRIVIA Books</h2><br>
+                        <p>TRIVIA Books is your premier destination for knowledge and literature. Founded in 2024, we aim to provide readers with access to the world's best books and educational resources.</p>
+                        <br><p>Our mission is to make quality literature accessible to everyone, everywhere.A book website is a dynamic platform where readers can explore a vast collection of books across various genres and formats. It typically features detailed book descriptions, reviews, and author information to help readers make informed choices. Many book websites offer recommendations, new releases, and bestseller lists to keep visitors updated on current trends. Some sites also have interactive features like reader reviews, ratings, and discussion forums, fostering a community of book enthusiasts. With easy search and browsing tools, a book website makes it convenient for readers to discover, purchase, or borrow books online, enhancing the reading experience.A book website is a dynamic platform where readers can explore a vast collection of books across various genres and formats. It typically features detailed book descriptions, reviews, and author information to help readers make informed choices. Many book websites offer recommendations, new releases, and bestseller lists to keep visitors updated on current trends. Some sites also have interactive features like reader reviews, ratings, and discussion forums, fostering a community of book enthusiasts. With easy search and browsing tools, a book website makes it convenient for readers to discover, purchase, or borrow books online, enhancing the reading experience.</p>
+                    </div>`;
+                    break;
+            }
+        }
+
+        // Show login page by default
+        showPage('login');
+    </script>
+</body>
+</html>
